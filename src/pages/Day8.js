@@ -25,15 +25,49 @@ function Day8() {
   const [search, setSearch] = React.useState("");
   const [dataGet, setDataGet] = React.useState([]);
   const [taskCount, setTaskCount] = React.useState(1);
+  
   React.useEffect(() => {
     getData();
   }, []);
+ 
   const getData = async () => {
-    
+    try {
+      let response = await Axios.get(`https://localhost:44365/api/RealDB/GetProducAdapter?name=${search}`);
+      console.log('%cDay8.js line:36 response', 'color: #007acc;', response);
+      setDataGet([...response.data])
+    } catch (error) {
+      console.log('%cDay8.js line:37 error', 'color: #007acc;', error);
+    }
   };
   //https://bobbyhadz.com/blog/react-get-input-value
   const handleSubmit = (e) =>{
-   
+    e.preventDefault();
+    console.log('%cDay8.js line:45 e.target.value', 'color: #007acc;', e.target.getAttribute('id'));
+    // console.log(e.target.name)
+    // Array.from(Array(taskCount).keys()).map((item, index) =>{
+    //   console.log('%cDay8.js line:47 e.target.name.value', 'color: #007acc;', e.target.name.value);
+    //   if(e.target.name == `task_${index+1}`){
+    //     console.log('%cDay8.js line:48 e.target.name.value', 'color: #007acc;', e.target.name.value);
+    //   }
+    // })
+
+    // let dataSubmit = {
+    //   "pk_user_id": 0,
+    //   "name": e.target.name.value,
+    //   "products": [
+    //     {
+    //       "pk_product_id": 0,
+    //       "product_name": "string",
+    //       "fk_user_id": 0
+    //     }
+    //   ]
+    // }
+    // try {
+    //   let response = Axios.post("https://localhost:44365/api/RealDB/InsertUserWithProduct",dataSubmit)
+    //   console.log('%cDay8.js line:67 response', 'color: #007acc;', response);
+    // } catch (error) {
+    //   console.log('%cDay8.js line:68 error', 'color: #007acc;', error);
+    // }
   }
   return (
     <div className="App">
