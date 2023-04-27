@@ -25,50 +25,51 @@ function Day8() {
   const [search, setSearch] = React.useState("");
   const [dataGet, setDataGet] = React.useState([]);
   const [taskCount, setTaskCount] = React.useState(1);
-  
+
   React.useEffect(() => {
     getData();
   }, []);
- 
+
   const getData = async () => {
     try {
-      let response = await Axios.get(`https://localhost:44365/api/RealDB/GetProducAdapter?name=${search}`);
-      console.log('%cDay8.js line:36 response', 'color: #007acc;', response);
-      setDataGet([...response.data])
+      let response = await Axios.get(
+        `https://localhost:44365/api/RealDB/GetProducAdapter?name=${search}`
+      );
+      console.log("%cDay8.js line:36 response", "color: #007acc;", response);
+      setDataGet([...response.data]);
     } catch (error) {
-      console.log('%cDay8.js line:37 error', 'color: #007acc;', error);
+      console.log("%cDay8.js line:37 error", "color: #007acc;", error);
     }
   };
   //https://bobbyhadz.com/blog/react-get-input-value
-  const handleSubmit = (e) =>{
+  const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('%cDay8.js line:45 e.target.value', 'color: #007acc;', e.target.getAttribute('id'));
+    console.log(
+      "%cDay8.js line:45 e.target.value",
+      "color: #007acc;",
+      e.target.getAttribute("id")
+    );
     // console.log(e.target.name)
-    // Array.from(Array(taskCount).keys()).map((item, index) =>{
-    //   console.log('%cDay8.js line:47 e.target.name.value', 'color: #007acc;', e.target.name.value);
-    //   if(e.target.name == `task_${index+1}`){
-    //     console.log('%cDay8.js line:48 e.target.name.value', 'color: #007acc;', e.target.name.value);
-    //   }
-    // })
+    let arrayProduct = [];
+    Array.from(Array(taskCount).keys()).map((item, index) => {
+      // console.log(e.target[`task_${index+1}`]?.value)
+      arrayProduct.push({ product_name: e.target[`task_${index + 1}`]?.value });
+    });
 
-    // let dataSubmit = {
-    //   "pk_user_id": 0,
-    //   "name": e.target.name.value,
-    //   "products": [
-    //     {
-    //       "pk_product_id": 0,
-    //       "product_name": "string",
-    //       "fk_user_id": 0
-    //     }
-    //   ]
-    // }
-    // try {
-    //   let response = Axios.post("https://localhost:44365/api/RealDB/InsertUserWithProduct",dataSubmit)
-    //   console.log('%cDay8.js line:67 response', 'color: #007acc;', response);
-    // } catch (error) {
-    //   console.log('%cDay8.js line:68 error', 'color: #007acc;', error);
-    // }
-  }
+    let dataSubmit = {
+      name: e.target.name.value,
+      products: arrayProduct,
+    };
+    try {
+      let response = Axios.post(
+        "https://localhost:44365/api/RealDB/InsertUserWithProduct",
+        dataSubmit
+      );
+      console.log("%cDay8.js line:67 response", "color: #007acc;", response);
+    } catch (error) {
+      console.log("%cDay8.js line:68 error", "color: #007acc;", error);
+    }
+  };
   return (
     <div className="App">
       <Container maxWidth="xl" sx={{ padding: 5 }}>
@@ -114,30 +115,29 @@ function Day8() {
             <Paper>
               <Typography>Post Data</Typography>
               <form onSubmit={handleSubmit}>
-              <Stack sx={{ padding: "20px" }} spacing={2}>
-                <TextField
-                  id="name"
-                  label="name"
-                  variant="standard"
-                  // value={search}
-                  // onChange={(e) => setSearch(e.target.value)}
-                />
+                <Stack sx={{ padding: "20px" }} spacing={2}>
+                  <TextField id="name" label="name" variant="standard" />
 
-                {Array.from(Array(taskCount).keys()).map((item, index) => (
-                  <TextField
-                    key={`task-${index}`}
-                    id={`task_${index+1}`}
-                    label={`task ${index + 1}`}
-                    variant="standard"
-                    // value={search}
-                    // onChange={(e) => setSearch(e.target.value)}
-                  />
-                ))}
+                  {Array.from(Array(taskCount).keys()).map((item, index) => (
+                    <TextField
+                      key={`task-${index}`}
+                      id={`task_${index + 1}`}
+                      label={`task ${index + 1}`}
+                      variant="standard"
+                    />
+                  ))}
 
-                <Button variant="outlined" onClick={()=>setTaskCount((prev)=>prev+1)}>Add more task</Button>
+                  <Button
+                    variant="outlined"
+                    onClick={() => setTaskCount((prev) => prev + 1)}
+                  >
+                    Add more task
+                  </Button>
 
-                <Button variant="contained" type="submit">Submit</Button>
-              </Stack>
+                  <Button variant="contained" type="submit">
+                    Submit
+                  </Button>
+                </Stack>
               </form>
             </Paper>
           </Grid>
