@@ -32,8 +32,12 @@ function Day8() {
 
   const getData = async () => {
     try {
+      //Axios.defaults.headers.common = {'Authorization': `Bearer ${'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiemFrYXJpYS53aWNha3Nvbm9AZ21haWwuY29tIiwicm9sZSI6ImFkbWluIiwibmJmIjoxNjgyNjAzNzk1LCJleHAiOjE2ODI2OTAxOTMsImlhdCI6MTY4MjYwMzc5NSwiaXNzIjoiemFrYXJpYSIsImF1ZCI6InVzZXJzIn0.tCLViXZ9bouPwRJ2QGu19FUpHA5SeIRn6nR2UNoUHSI'}`}
+      const config = {
+        headers: { Authorization: `Bearer ${'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiemFrYXJpYS53aWNha3Nvbm9AZ21haWwuY29tIiwicm9sZSI6ImFkbWluIiwibmJmIjoxNjgyNjAzNzk1LCJleHAiOjE2ODI2OTAxOTMsImlhdCI6MTY4MjYwMzc5NSwiaXNzIjoiemFrYXJpYSIsImF1ZCI6InVzZXJzIn0.tCLViXZ9bouPwRJ2QGu19FUpHA5SeIRn6nR2UNoUHSI'}` }
+      };
       let response = await Axios.get(
-        `https://localhost:44365/api/RealDB/GetProducAdapter?name=${search}`
+        `https://localhost:44365/api/RealDB/GetProducAdapter?name=${search}`,config
       );
       console.log("%cDay8.js line:36 response", "color: #007acc;", response);
       setDataGet([...response.data]);
