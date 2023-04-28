@@ -12,6 +12,8 @@ import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import Divider from "@mui/material/Divider";
+import APIRequest, { setAuthTokenHeader } from "../api/axios";
+import { getTaskAdapter } from "../api/task/taskApi";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -27,18 +29,15 @@ function Day8() {
   const [taskCount, setTaskCount] = React.useState(1);
 
   React.useEffect(() => {
+    setAuthTokenHeader()
     getData();
   }, []);
 
   const getData = async () => {
     try {
       //Axios.defaults.headers.common = {'Authorization': `Bearer ${'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiemFrYXJpYS53aWNha3Nvbm9AZ21haWwuY29tIiwicm9sZSI6ImFkbWluIiwibmJmIjoxNjgyNjAzNzk1LCJleHAiOjE2ODI2OTAxOTMsImlhdCI6MTY4MjYwMzc5NSwiaXNzIjoiemFrYXJpYSIsImF1ZCI6InVzZXJzIn0.tCLViXZ9bouPwRJ2QGu19FUpHA5SeIRn6nR2UNoUHSI'}`}
-      const config = {
-        headers: { Authorization: `Bearer ${'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiemFrYXJpYS53aWNha3Nvbm9AZ21haWwuY29tIiwicm9sZSI6ImFkbWluIiwibmJmIjoxNjgyNjAzNzk1LCJleHAiOjE2ODI2OTAxOTMsImlhdCI6MTY4MjYwMzc5NSwiaXNzIjoiemFrYXJpYSIsImF1ZCI6InVzZXJzIn0.tCLViXZ9bouPwRJ2QGu19FUpHA5SeIRn6nR2UNoUHSI'}` }
-      };
-      let response = await Axios.get(
-        `https://localhost:44365/api/RealDB/GetProducAdapter?name=${search}`,config
-      );
+      
+      let response = await getTaskAdapter(search);
       console.log("%cDay8.js line:36 response", "color: #007acc;", response);
       setDataGet([...response.data]);
     } catch (error) {
@@ -65,8 +64,8 @@ function Day8() {
       products: arrayProduct,
     };
     try {
-      let response = Axios.post(
-        "https://localhost:44365/api/RealDB/InsertUserWithProduct",
+      let response = APIRequest.post(
+        "RealDB/InsertUserWithProduct",
         dataSubmit
       );
       console.log("%cDay8.js line:67 response", "color: #007acc;", response);
