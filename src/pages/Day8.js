@@ -29,19 +29,19 @@ function Day8() {
   const [taskCount, setTaskCount] = React.useState(1);
 
   React.useEffect(() => {
-    setAuthTokenHeader()
+    //setAuthTokenHeader()
     getData();
   }, []);
 
   const getData = async () => {
     try {
       //Axios.defaults.headers.common = {'Authorization': `Bearer ${'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiemFrYXJpYS53aWNha3Nvbm9AZ21haWwuY29tIiwicm9sZSI6ImFkbWluIiwibmJmIjoxNjgyNjAzNzk1LCJleHAiOjE2ODI2OTAxOTMsImlhdCI6MTY4MjYwMzc5NSwiaXNzIjoiemFrYXJpYSIsImF1ZCI6InVzZXJzIn0.tCLViXZ9bouPwRJ2QGu19FUpHA5SeIRn6nR2UNoUHSI'}`}
-      
+
       let response = await getTaskAdapter(search);
-      console.log("%cDay8.js line:36 response", "color: #007acc;", response);
+      //console.log("%cDay8.js line:36 response", "color: #007acc;", response);
       setDataGet([...response.data]);
     } catch (error) {
-      console.log("%cDay8.js line:37 error", "color: #007acc;", error);
+      //console.log("%cDay8.js line:37 error", "color: #007acc;", error);
     }
   };
   //https://bobbyhadz.com/blog/react-get-input-value

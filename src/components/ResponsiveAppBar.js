@@ -14,15 +14,17 @@ import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 import { Link, useNavigate } from "react-router-dom";
 import { navMenu } from "../utils/menu";
+import AuthContext from "../context/AuthContext";
 
 const pages = navMenu;
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
+const settings = ["Logout"];
 
 function ResponsiveAppBar(props) {
   const { functAdd } = props;
   const navigate = useNavigate();
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const { setUser } = React.useContext(AuthContext);
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -36,6 +38,8 @@ function ResponsiveAppBar(props) {
   };
 
   const handleCloseUserMenu = () => {
+    localStorage.removeItem("jwttoken");
+    setUser("");
     setAnchorElUser(null);
   };
 
